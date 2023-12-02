@@ -1,9 +1,9 @@
 // Input file: resources/day1.txt
 
-val input = readInputFile(1)
+private val input = readInputFile(1)
 
-val numbers = listOf("1", "one", "2", "two", "3", "three", "4", "four", "5", "five", "6", "six", "7", "seven", "8", "eight", "9", "nine")
-val regex = numbers.joinToString("|").toRegex()
+private val numbers = listOf("1", "one", "2", "two", "3", "three", "4", "four", "5", "five", "6", "six", "7", "seven", "8", "eight", "9", "nine")
+private val regex = numbers.joinToString("|").toRegex()
 
 fun main() = runAttempt {
     input.lineSequence().sumOf {
