@@ -18,3 +18,5 @@ fun Regex.findAllWithOverlap(input: CharSequence, startIndex: Int = 0): Sequence
     }
     return generateSequence({ find(input, startIndex) }, { find(input, it.range.first + 1) })
 }
+
+fun Boolean.toInt() = if (this) 1 else 0
