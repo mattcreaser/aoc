@@ -1,3 +1,4 @@
+import kotlin.math.sqrt
 import kotlin.system.measureTimeMillis
 
 fun runAttempt(block: () -> Any) {
@@ -20,3 +21,9 @@ fun Regex.findAllWithOverlap(input: CharSequence, startIndex: Int = 0): Sequence
 }
 
 fun Boolean.toInt() = if (this) 1 else 0
+
+fun quadraticRoots(a: Float, b: Float, c: Float): Pair<Float, Float> {
+    val discriminant = b * b - 4 * a * c
+    val sqrtDiscriminant = sqrt(discriminant)
+    return (-b + sqrtDiscriminant) / (2 * a) to (-b - sqrtDiscriminant) / (2 * a)
+}
