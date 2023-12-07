@@ -4,22 +4,15 @@ class Day7 : AdventOfCodeDay(7) {
     override fun part1() = run("23456789TJQKA") { value, _ -> value }
     override fun part2() = run("J23456789TQKA") { value, jokers ->
         when (jokers) {
-            1 -> when (value) {
-                1, 2, 3 -> value + 2
-                else -> value + 1
-            }
-            2 -> when (value) {
-                1, 2, 4 -> value + 2
-                else -> value
-            }
+            1 -> when (value) { 1, 2, 3 -> value + 2; else -> value + 1 }
+            2 -> when (value) { 1, 2, 4 -> value + 2; else -> value }
             3 -> value + 2
-            4 -> 6
-            5 -> 6
+            4, 5 -> 6
             else -> value
         }
     }
 
-    private fun run(cardValue: String, sortValue: (Int, Int) -> Int) = input.map { parse(it, cardValue, sortValue) }
+    private fun run(cardValue: String, adjust: (Int, Int) -> Int) = input.map { parse(it, cardValue, adjust) }
         .sorted()
         .foldIndexed(0) { i, sum, card -> sum + (i + 1) * card.bid }
 
@@ -29,8 +22,7 @@ class Day7 : AdventOfCodeDay(7) {
         val counts = IntArray(13)
         val tiebreak = cards.foldIndexed(0) { i, acc, char ->
             val value = cardValue.indexOf(char)
-            val count = ++counts[value]
-            when (count) {
+            when (++counts[value]) {
                 2, 5 -> handValue++
                 3, 4 -> handValue += 2
             }
