@@ -1,11 +1,11 @@
 import kotlin.math.pow
 
-class Day7 : AdventOfCodeDay(7) {
+class Day7(input: String? = null) : AdventOfCodeDay(7, input) {
     override fun part1() = run("23456789TJQKA") { value, _ -> value }
     override fun part2() = run("J23456789TQKA") { value, jokers ->
         when (jokers) {
             1 -> when (value) { 1, 2, 3 -> value + 2; else -> value + 1 }
-            2 -> when (value) { 1, 2, 4 -> value + 2; else -> value }
+            2 -> when (value) { 2 -> value + 3; 1, 4 -> value + 2; else -> value }
             3 -> value + 2
             4, 5 -> 6
             else -> value
