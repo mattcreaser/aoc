@@ -14,6 +14,6 @@ abstract class AdventOfCodeDay(private val num: Int) {
     private fun runAttempt(block: () -> Any) {
         val result: Any
         val time = measureNanoTime { result = block() }
-        println("Got result $result in ${time / 1_000_000}ms")
+        println("Got result $result in ${time / 1_000_000f}ms")
     }
 }
