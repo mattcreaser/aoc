@@ -1,6 +1,6 @@
 import kotlin.math.pow
 
-class Day7(input: String? = null) : AdventOfCodeDay(7, input) {
+class Day7(input: String? = null) : AdventOfCodeDay(input) {
     override fun part1() = run("23456789TJQKA") { value, _ -> value }
     override fun part2() = run("J23456789TQKA") { value, jokers ->
         when (jokers) {

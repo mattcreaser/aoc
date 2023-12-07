@@ -1,25 +1,20 @@
-private val input = readInputFile(3).lines()
-
 private const val numCols = 140
 
-fun main() {
-    runAttempt(::part1)
-    runAttempt(::part2)
-}
+class Day3(input: String? = null) : AdventOfCodeDay(input) {
+    override fun part1() = calcScore(ParsedLine::scoreParts)
+    override fun part2() = calcScore(ParsedLine::scoreGears)
 
-private fun part1() = calcScore(ParsedLine::scoreParts)
-private fun part2() = calcScore(ParsedLine::scoreGears)
+    private fun calcScore(lineScore: ParsedLine.(prevLine: ParsedLine?, nextLine: ParsedLine?) -> Int): Int {
+        var prevLine: ParsedLine? = null
+        var currentLine: ParsedLine? = null
+        var nextLine: ParsedLine? = ParsedLine(lines[0])
 
-private fun calcScore(lineScore: ParsedLine.(prevLine: ParsedLine?, nextLine: ParsedLine?) -> Int): Int {
-    var prevLine: ParsedLine? = null
-    var currentLine: ParsedLine? = null
-    var nextLine: ParsedLine? = ParsedLine(input[0])
-
-    return input.foldIndexed(0) { index, sum, _ ->
-        prevLine = currentLine
-        currentLine = nextLine
-        nextLine = if (index < input.size - 1) ParsedLine(input[index + 1]) else null
-        sum + (currentLine?.lineScore(prevLine, nextLine) ?: 0)
+        return lines.foldIndexed(0) { index, sum, _ ->
+            prevLine = currentLine
+            currentLine = nextLine
+            nextLine = if (index < lines.size - 1) ParsedLine(lines[index + 1]) else null
+            sum + (currentLine?.lineScore(prevLine, nextLine) ?: 0)
+        }
     }
 }
 
@@ -79,6 +74,8 @@ private class ParsedLine(line: String) {
         if (adjacentParts.size == 2) adjacentParts.first().num * adjacentParts.last().num else 0
     }
 
-    private fun ParsedLine?.partAt(i: Int) = partAtPosition?.get(i)
+    private fun ParsedLine?.partAt(i: Int) = this?.partAtPosition?.get(i)
     private fun ParsedLine?.symbolAt(i: Int) = this?.symbolAtPosition?.getOrNull(i) == true
 }
+
+fun main() = Day3().run()

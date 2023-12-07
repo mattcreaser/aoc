@@ -1,11 +1,13 @@
 import kotlin.system.measureNanoTime
 
-abstract class AdventOfCodeDay(num: Int, input: String?) {
+abstract class AdventOfCodeDay(input: String?) {
     abstract fun part1(): Any
     abstract fun part2(): Any
 
     protected val input: Sequence<String> =
-        input?.lineSequence() ?: this.javaClass.getResource("day$num.txt")?.readText()?.lineSequence() ?: error("Cannot read input file")
+        input?.lineSequence() ?: this.javaClass.getResource("day$dayNum.txt")?.readText()?.lineSequence() ?: error("Cannot read input file")
+
+    protected val lines by lazy { this.input.toList() }
 
     fun run() {
         runAttempt { part1() }
@@ -16,6 +18,12 @@ abstract class AdventOfCodeDay(num: Int, input: String?) {
         get() = part1()
     val part2: Any
         get() = part2()
+
+    private val dayNum: Int
+        get() {
+            val classNum = Regex.integer.find(this::class.simpleName!!)?.value?.toInt() ?: error("Invalid class name")
+            return classNum
+        }
 
     private fun runAttempt(block: () -> Any) {
         val result: Any

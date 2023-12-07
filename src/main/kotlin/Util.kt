@@ -22,6 +22,9 @@ fun Regex.findAllWithOverlap(input: CharSequence, startIndex: Int = 0): Sequence
 
 fun Boolean.toInt() = if (this) 1 else 0
 
+val Regex.Companion.integer
+    get() = "\\d+".toRegex()
+
 fun quadraticRoots(a: Float, b: Float, c: Float): Pair<Float, Float> {
     val discriminant = b * b - 4 * a * c
     val sqrtDiscriminant = sqrt(discriminant)
