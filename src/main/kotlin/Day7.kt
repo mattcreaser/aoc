@@ -5,8 +5,8 @@ class Day7(input: String? = null) : AdventOfCodeDay(input) {
     override fun part2() = run("J23456789TQKA") { value, jokers ->
         when (jokers) {
             1 -> when (value) { 1, 2, 3 -> value + 2; else -> value + 1 }
-            2 -> when (value) { 2 -> value + 3; 1, 4 -> value + 2; else -> value }
-            3 -> value + 2
+            2 -> when (value) { 2 -> 5; 1, 4 -> value + 2; else -> value }
+            3 -> 5
             4, 5 -> 6
             else -> value
         }

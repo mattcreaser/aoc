@@ -4,10 +4,8 @@ abstract class AdventOfCodeDay(input: String?) {
     abstract fun part1(): Any
     abstract fun part2(): Any
 
-    protected val input: Sequence<String> =
-        input?.lineSequence() ?: this.javaClass.getResource("day$dayNum.txt")?.readText()?.lineSequence() ?: error("Cannot read input file")
-
-    protected val lines by lazy { this.input.toList() }
+    protected val lines = input?.lines() ?: this.javaClass.getResource("day$dayNum.txt")?.readText()?.lines() ?: error("Cannot read input file")
+    protected val input = lines.asSequence()
 
     fun run() {
         runAttempt { part1() }
@@ -20,10 +18,7 @@ abstract class AdventOfCodeDay(input: String?) {
         get() = part2()
 
     private val dayNum: Int
-        get() {
-            val classNum = Regex.integer.find(this::class.simpleName!!)?.value?.toInt() ?: error("Invalid class name")
-            return classNum
-        }
+        get() = Regex.integer.find(this::class.simpleName!!)?.value?.toInt() ?: error("Invalid class name")
 
     private fun runAttempt(block: () -> Any) {
         val result: Any
