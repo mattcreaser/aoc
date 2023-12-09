@@ -5,7 +5,7 @@ class Day6(input: String? = null) : AdventOfCodeDay(input) {
     private data class Race(val time: Long, val distance: Long)
 
     override fun part1(): Any {
-        val (times, distances) = lineSequence.map { line -> Regex.integer.findAll(line).map { it.value.toLong() }.toList() }.toList()
+        val (times, distances) = lineSequence.map { line -> line.toLongs().toList() }.toList()
         return times.zip(distances, ::Race).fold(1L) { product, race -> product * race.calculateWaysToWin() }
     }
 

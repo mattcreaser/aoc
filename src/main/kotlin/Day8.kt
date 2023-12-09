@@ -1,5 +1,3 @@
-
-
 class Day8(input: String? = null) : AdventOfCodeDay(input) {
 
     data class Node(val string: String, val left: String, val right: String)

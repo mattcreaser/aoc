@@ -23,7 +23,10 @@ fun Regex.findAllWithOverlap(input: CharSequence, startIndex: Int = 0): Sequence
 fun Boolean.toInt() = if (this) 1 else 0
 
 val Regex.Companion.integer
-    get() = "\\d+".toRegex()
+    get() = "-?\\d+".toRegex()
+
+fun String.toLongs() = Regex.integer.findAll(this).map { it.value.toLong() }
+fun String.toInts() = Regex.integer.findAll(this).map { it.value.toInt() }
 
 fun quadraticRoots(a: Float, b: Float, c: Float): Pair<Float, Float> {
     val discriminant = b * b - 4 * a * c
@@ -31,7 +34,24 @@ fun quadraticRoots(a: Float, b: Float, c: Float): Pair<Float, Float> {
     return (-b + sqrtDiscriminant) / (2 * a) to (-b - sqrtDiscriminant) / (2 * a)
 }
 
+fun Sequence<String>.toInts() = map(String::toInts)
 fun <T> Sequence<T>.repeatForever() = sequence { while (true) { yieldAll(this@repeatForever) } }
+fun <T> Sequence<T>.mapAdjacentPairs(transform: (T, T) -> T) = sequence {
+    val iterator = this@mapAdjacentPairs.iterator()
+    if (!iterator.hasNext()) return@sequence
+    var next = iterator.next()
+    while (iterator.hasNext()) {
+        val first = next
+        if (iterator.hasNext()) {
+            next = iterator.next()
+            yield(transform(first, next))
+        }
+    }
+}
+
+fun <T> List<T>.mapAdjacentPairs(transform: (T, T) -> T) = mapIndexedNotNull { index, item ->
+    if (index < size - 1) transform(item, this[index + 1]) else null
+}
 
 fun Sequence<Long>.lcm(): Long = reduce(::lcm)
 fun lcm(a: Long, b: Long) = (a * b) / gcd(a, b)
