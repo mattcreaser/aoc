@@ -5,12 +5,12 @@ class Day6(input: String? = null) : AdventOfCodeDay(input) {
     private data class Race(val time: Long, val distance: Long)
 
     override fun part1(): Any {
-        val (times, distances) = input.map { line -> Regex.integer.findAll(line).map { it.value.toLong() }.toList() }.toList()
+        val (times, distances) = lineSequence.map { line -> Regex.integer.findAll(line).map { it.value.toLong() }.toList() }.toList()
         return times.zip(distances, ::Race).fold(1L) { product, race -> product * race.calculateWaysToWin() }
     }
 
     override fun part2(): Any {
-        val (time, distance) = input.map { it.filter(Char::isDigit) }.map(String::toLong).toList()
+        val (time, distance) = lineSequence.map { it.filter(Char::isDigit) }.map(String::toLong).toList()
         return Race(time, distance).calculateWaysToWin()
     }
 

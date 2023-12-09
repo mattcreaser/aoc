@@ -32,7 +32,6 @@ fun quadraticRoots(a: Float, b: Float, c: Float): Pair<Float, Float> {
 }
 
 fun <T> Sequence<T>.repeatForever() = sequence { while (true) { yieldAll(this@repeatForever) } }
-inline fun <T> MutableList<T>.mapInPlace(func: (T) -> T) = forEachIndexed { index, i -> this[index] = func(i) }
 
 fun Sequence<Long>.lcm(): Long = reduce(::lcm)
 fun lcm(a: Long, b: Long) = (a * b) / gcd(a, b)

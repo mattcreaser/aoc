@@ -1,7 +1,7 @@
 class Day5(input: String? = null) : AdventOfCodeDay(input) {
 
     private val regex = """(\d+) (\d+) (\d+)""".toRegex()
-    private val seeds = "\\d+".toRegex().findAll(this.input.first()).map { it.value.toLong() }
+    private val seeds = "\\d+".toRegex().findAll(lineSequence.first()).map { it.value.toLong() }
     private val stages = getStages()
 
     override fun part1() = seeds.toLocation(stages).min()
@@ -14,7 +14,7 @@ class Day5(input: String? = null) : AdventOfCodeDay(input) {
     data class Stage(val mappings: MutableList<Mapping> = mutableListOf())
     data class Mapping(val range: LongRange, val increment: Long)
 
-    private fun getStages() = input.drop(2).fold(mutableListOf(Stage())) { stages, line ->
+    private fun getStages() = lineSequence.drop(2).fold(mutableListOf(Stage())) { stages, line ->
         if (line.isEmpty()) {
             stages += Stage()
         } else {

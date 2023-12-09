@@ -12,7 +12,7 @@ class Day7(input: String? = null) : AdventOfCodeDay(input) {
         }
     }
 
-    private fun run(cardValue: String, adjust: (Int, Int) -> Int) = input.map { parse(it, cardValue, adjust) }
+    private fun run(cardValue: String, adjust: (Int, Int) -> Int) = lineSequence.map { parse(it, cardValue, adjust) }
         .sorted()
         .foldIndexed(0) { i, sum, card -> sum + (i + 1) * card.bid }
 

@@ -1,7 +1,7 @@
 import kotlin.math.pow
 
 class Day4(input: String? = null) : AdventOfCodeDay(input) {
-    override fun part1() = input.sumOf { line ->
+    override fun part1() = lineSequence.sumOf { line ->
         2f.pow(line.countWins() - 1).toInt()
     }
 
