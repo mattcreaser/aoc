@@ -25,8 +25,8 @@ fun Boolean.toInt() = if (this) 1 else 0
 val Regex.Companion.integer
     get() = "-?\\d+".toRegex()
 
-fun String.toLongs() = Regex.integer.findAll(this).map { it.value.toLong() }
-fun String.toInts() = Regex.integer.findAll(this).map { it.value.toInt() }
+fun String.toLongs() = this.splitToSequence(" ").map(String::toLong)
+fun String.toInts() = this.splitToSequence(" ").map(String::toInt)
 
 fun quadraticRoots(a: Float, b: Float, c: Float): Pair<Float, Float> {
     val discriminant = b * b - 4 * a * c
