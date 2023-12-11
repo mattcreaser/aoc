@@ -38,20 +38,12 @@ class Day10(input: String? = null) : AdventOfCodeDay(input) {
         map[a.y][a.x] = grid[a.y][a.x]
 
         var count = 0
-        val parityY = BooleanArray(map[0].size) { false }
-        val fY = BooleanArray(map[0].size) { false }
-        map.forEachIndexed { y, row ->
-            var parityX = false
-            var fX = false
-            row.forEachIndexed { x, char ->
+        map.forEach { row ->
+            var inside = false
+            row.forEach { char ->
                 when (char) {
-                    '.' -> if (parityX && parityY[x]) { map[y][x] = 'I'; count++ } else { map[y][x] = 'O' }
-                    '|' -> parityX = !parityX
-                    '-' -> parityY[x] = !parityY[x]
-                    'F' -> { fX = true; fY[x] = true }
-                    'L' -> { fX = false; parityY[x] = parityY[x] == fY[x] }
-                    '7' -> { parityX = parityX == fX; fY[x] = false }
-                    'J' -> { parityX = parityX != fX; parityY[x] = parityY[x] != fY[x] }
+                    '.' -> if (inside) count++
+                    '|', 'L', 'J' -> inside = !inside
                 }
             }
         }
