@@ -16,8 +16,8 @@ class Day4(input: String? = null) : AdventOfCodeDay(input) {
     }
 
     private fun String.countWins() = cardNums().count { winningNums().contains(it) }
-    private fun String.winningNums() = Regex.integer.findAll(substringBefore('|'), 9).map { it.value.toInt() }
-    private fun String.cardNums() = Regex.integer.findAll(substringAfter('|')).map { it.value.toInt() }
+    private fun String.winningNums() = Regexp.integer.findAll(substringBefore('|'), 9).map { it.value.toInt() }
+    private fun String.cardNums() = Regexp.integer.findAll(substringAfter('|')).map { it.value.toInt() }
 }
 
 fun main() = Day4().run()

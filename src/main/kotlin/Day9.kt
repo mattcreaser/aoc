@@ -8,7 +8,7 @@ class Day9(input: String? = null) : AdventOfCodeDay(input) {
         .sum()
 
     private fun List<Int>.calculateNext(func: List<Int>.(Int) -> Int): Int {
-        val diffs = mapAdjacentPairs { a, b -> b - a }
+        val diffs = zipWithNext { a, b -> b - a }
         return if (diffs.all { it == 0 }) first() else func(diffs.calculateNext(func))
     }
 }

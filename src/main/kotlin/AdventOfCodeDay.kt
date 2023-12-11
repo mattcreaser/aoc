@@ -19,7 +19,7 @@ abstract class AdventOfCodeDay(input: String?) {
         get() = part2()
 
     private val dayNum: Int
-        get() = Regex.integer.find(this::class.simpleName!!)?.value?.toInt() ?: error("Invalid class name")
+        get() = Regexp.integer.find(this::class.simpleName!!)?.value?.toInt() ?: error("Invalid class name")
 
     private fun runAttempt(block: () -> Any) {
         val result: Any
