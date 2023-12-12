@@ -23,3 +23,11 @@ fun <T> Sequence<T>.repeatForever() = sequence { while (true) { yieldAll(this@re
 fun Sequence<Long>.lcm(): Long = reduce(::lcm)
 fun lcm(a: Long, b: Long) = (a * b) / gcd(a, b)
 tailrec fun gcd(a: Long, b: Long): Long = if (b == 0L) a else gcd(b, a % b)
+
+fun <T> List<T>.pairs(): List<Pair<T, T>> {
+    val result = ArrayList<Pair<T, T>>(size * (size - 1) / 2)
+    for (i in indices) for (j in i + 1..<size) result.add(this[i] to this[j])
+    return result
+}
+
+inline fun BooleanArray.runningSum(func: (Boolean) -> Int) = runningFold(0) { sum, bool -> sum + func(bool) }

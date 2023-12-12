@@ -2,14 +2,14 @@ import kotlin.math.abs
 
 class Day11(
     input: String? = null,
-    private val part2Multiplier: Int = 1_000_000,
+    private val part2Expansion: Int = 1_000_000,
 ) : AdventOfCodeDay(input) {
 
     data class Galaxy(var x: Int, var y: Int) {
         fun distanceTo(other: Galaxy) = abs(x - other.x) + abs(y - other.y)
     }
 
-    private fun sumDistances(expandMultiplier: Int): Long {
+    private fun sumDistances(expansion: Int): Long {
         val emptyRows = BooleanArray(lines.size) { true }
         val emptyCols = BooleanArray(lines[0].length) { true }
         val galaxies = mutableListOf<Galaxy>()
@@ -24,19 +24,19 @@ class Day11(
             }
         }
 
-        val expandY = emptyRows.runningFold(0) { count, empty -> count + empty.toInt() * (expandMultiplier - 1) }
-        val expandX = emptyCols.runningFold(0) { count, empty -> count + empty.toInt() * (expandMultiplier - 1) }
+        val expandY = emptyRows.runningSum { empty -> empty.toInt() * (expansion - 1) }
+        val expandX = emptyCols.runningSum { empty -> empty.toInt() * (expansion - 1) }
 
         galaxies.forEach {
             it.x += expandX[it.x]
             it.y += expandY[it.y]
         }
 
-        return galaxies.foldIndexed(0L) { i, sum, a -> sum + galaxies.drop(i).sumOf { b -> b.distanceTo(a).toLong() } }
+        return galaxies.pairs().sumOf { (a, b) -> a.distanceTo(b).toLong() }
     }
 
     override fun part1() = sumDistances(2)
-    override fun part2() = sumDistances(part2Multiplier)
+    override fun part2() = sumDistances(part2Expansion)
 }
 
 fun main() = Day11().run()
