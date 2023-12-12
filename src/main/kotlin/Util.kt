@@ -19,6 +19,7 @@ fun quadraticRoots(a: Float, b: Float, c: Float): Pair<Float, Float> {
 
 fun Sequence<String>.toInts() = map(String::toInts)
 fun <T> Sequence<T>.repeatForever() = sequence { while (true) { yieldAll(this@repeatForever) } }
+fun <T> Sequence<T>.repeat(n: Int) = sequence { for (i in 0..<n) { yieldAll(this@repeat) } }
 
 fun Sequence<Long>.lcm(): Long = reduce(::lcm)
 fun lcm(a: Long, b: Long) = (a * b) / gcd(a, b)
