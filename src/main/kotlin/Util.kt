@@ -31,4 +31,19 @@ fun <T> List<T>.pairs(): List<Pair<T, T>> {
     return result
 }
 
+fun <T> List<T>.splitBy(func: (T) -> Boolean): Sequence<List<T>> {
+    var index = 0
+    val source = this
+    return generateSequence {
+        if (index >= source.size) return@generateSequence null
+        buildList {
+            var next = source.getOrNull(index++)
+            while (next != null && !func(next)) {
+                add(next)
+                next = source.getOrNull(index++)
+            }
+        }
+    }
+}
+
 inline fun BooleanArray.runningSum(func: (Boolean) -> Int) = runningFold(0) { sum, bool -> sum + func(bool) }
