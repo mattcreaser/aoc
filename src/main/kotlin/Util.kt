@@ -47,3 +47,15 @@ fun <T> List<T>.splitBy(func: (T) -> Boolean): Sequence<List<T>> {
 }
 
 inline fun BooleanArray.runningSum(func: (Boolean) -> Int) = runningFold(0) { sum, bool -> sum + func(bool) }
+
+enum class Direction(val dx: Int, val dy: Int) {
+    Up(0, -1),
+    Down(0, 1),
+    Left(-1, 0),
+    Right(1, 0),
+    ;
+
+    val vertical = dx == 0
+    val horizontal = dy == 0
+    val bitValue = 1 shl ordinal
+}

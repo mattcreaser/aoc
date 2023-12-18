@@ -1,17 +1,17 @@
-
+import Direction.*
 
 class Day16(input: String? = null) : AdventOfCodeDay(input) {
     private val grid = lines.map { it.toCharArray() }.toTypedArray()
     private val xRange = grid[0].indices
     private val yRange = grid.indices
 
-    override fun part1() = countEnergized(Beam(0, 0, 1, 0))
+    override fun part1() = countEnergized(Beam(0, 0, Right))
 
     override fun part2() = maxOf(
-        xRange.maxOf { countEnergized(Beam(it, 0, 0, 1)) },
-        yRange.maxOf { countEnergized(Beam(0, it, 1, 0)) },
-        xRange.maxOf { countEnergized(Beam(it, yRange.last, 0, -1)) },
-        yRange.maxOf { countEnergized(Beam(xRange.last, it, -1, 0)) },
+        xRange.maxOf { countEnergized(Beam(it, 0, Down)) },
+        yRange.maxOf { countEnergized(Beam(0, it, Right)) },
+        xRange.maxOf { countEnergized(Beam(it, yRange.last, Up)) },
+        yRange.maxOf { countEnergized(Beam(xRange.last, it, Left)) },
     )
 
     private fun countEnergized(start: Beam): Int {
@@ -21,11 +21,11 @@ class Day16(input: String? = null) : AdventOfCodeDay(input) {
             val iterator = beams.listIterator()
             while (iterator.hasNext()) {
                 val beam = iterator.next()
-                if (visited[beam.y][beam.x] and beam.direction != 0) {
+                if (visited[beam.y][beam.x] and beam.direction.bitValue != 0) {
                     iterator.remove()
                     continue
                 }
-                visited[beam.y][beam.x] = visited[beam.y][beam.x] or beam.direction
+                visited[beam.y][beam.x] = visited[beam.y][beam.x] or beam.direction.bitValue
                 val newBeam = beam.update(grid[beam.y][beam.x])
                 if (!beam.isOnGrid()) iterator.remove()
                 if (newBeam != null && newBeam.isOnGrid()) {
@@ -39,31 +39,33 @@ class Day16(input: String? = null) : AdventOfCodeDay(input) {
     private fun Beam.isOnGrid() = xRange.contains(x) && yRange.contains(y)
 }
 
-data class Beam(var x: Int, var y: Int, var dx: Int, var dy: Int) {
-    val direction: Int
-        get() = when {
-            dx == 1 -> 1
-            dy == 1 -> 2
-            dx == -1 -> 4
-            else -> 8
-        }
-
+data class Beam(var x: Int, var y: Int, var direction: Direction) {
     fun update(char: Char): Beam? {
         var newBeam: Beam? = null
         when (char) {
-            '/' -> dy = -dx.also { dx = -dy }
-            '\\' -> dy = dx.also { dx = dy }
-            '|' -> if (dx != 0) {
-                dy = -1; dx = 0
-                newBeam = Beam(x, y + 1, 0, 1)
+            '/' -> direction = when(direction) {
+                Up -> Right
+                Down -> Left
+                Left -> Down
+                Right -> Up
             }
-            '-' -> if (dy != 0) {
-                dy = 0; dx = -1
-                newBeam = Beam(x + 1, y, 1, 0)
+            '\\' -> direction = when(direction) {
+                Up -> Left
+                Down -> Right
+                Left -> Up
+                Right -> Down
+            }
+            '|' -> if (direction.horizontal) {
+                direction = Up
+                newBeam = Beam(x, y + 1, Down)
+            }
+            '-' -> if (direction.vertical) {
+                direction = Left
+                newBeam = Beam(x + 1, y, Right)
             }
         }
-        x += dx
-        y += dy
+        x += direction.dx
+        y += direction.dy
         return newBeam
     }
 }
