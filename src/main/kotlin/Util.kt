@@ -58,4 +58,15 @@ enum class Direction(val dx: Int, val dy: Int) {
     val vertical = dx == 0
     val horizontal = dy == 0
     val bitValue = 1 shl ordinal
+    val orthagonals by lazy { if (vertical) arrayOf(Left, Right) else arrayOf(Up, Down) }
 }
+
+data class Position(var x: Int, var y: Int) {
+    operator fun plus(direction: Direction) = Position(x + direction.dx, y + direction.dy)
+    operator fun plusAssign(direction: Direction) {
+        x += direction.dx
+        y += direction.dy
+    }
+}
+
+fun Array<List<Int>>.getOrNull(position: Position) = getOrNull(position.y)?.getOrNull(position.x)
