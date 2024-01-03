@@ -70,3 +70,9 @@ data class Position(var x: Int, var y: Int) {
 }
 
 fun Array<List<Int>>.getOrNull(position: Position) = getOrNull(position.y)?.getOrNull(position.x)
+
+fun IntRange.size() = last - first + 1
+fun IntRange.gt(x: Int) = if (x >= last) null else maxOf(x+1, first)..last
+fun IntRange.lt(x: Int) = if (x <= first) null else first..minOf(last, x-1)
+fun IntRange.gte(x: Int) = if (x > last) null else maxOf(x, first)..last
+fun IntRange.lte(x: Int) = if (x < first) null else first..minOf(last, x)
