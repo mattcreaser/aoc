@@ -20,4 +20,6 @@ rootProject.name = "aoc"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 include(":y2023")
 project(":y2023").projectDir = file("2023")
+include(":y2024")
+project(":y2024").projectDir = file("2024")
 include(":common")
