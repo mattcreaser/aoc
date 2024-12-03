@@ -48,11 +48,11 @@ fun <T> List<T>.splitBy(func: (T) -> Boolean): Sequence<List<T>> {
 
 inline fun BooleanArray.runningSum(func: (Boolean) -> Int) = runningFold(0) { sum, bool -> sum + func(bool) }
 
-enum class Direction(val dx: Int, val dy: Int) {
-    Up(0, -1),
-    Down(0, 1),
-    Left(-1, 0),
-    Right(1, 0),
+enum class Direction(val dx: Int, val dy: Int, val char: Char) {
+    Up(0, -1, '^'),
+    Down(0, 1, 'v'),
+    Left(-1, 0, '<'),
+    Right(1, 0, '>'),
     ;
 
     val vertical = dx == 0
@@ -76,3 +76,21 @@ fun IntRange.gt(x: Int) = if (x >= last) null else maxOf(x+1, first)..last
 fun IntRange.lt(x: Int) = if (x <= first) null else first..minOf(last, x-1)
 fun IntRange.gte(x: Int) = if (x > last) null else maxOf(x, first)..last
 fun IntRange.lte(x: Int) = if (x < first) null else first..minOf(last, x)
+
+typealias CharGrid = Array<CharArray>
+typealias BooleanGrid = Array<BooleanArray>
+
+val CharGrid.xRange: IntRange
+    get() = first().indices
+val CharGrid.yRange: IntRange
+    get() = indices
+operator fun CharGrid.get(pos: Position) = this.getOrNull(pos.y)?.getOrNull(pos.x)
+operator fun CharGrid.set(pos: Position, char: Char) { this[pos.y][pos.x] = char }
+inline fun CharGrid.positionOf(crossinline func: (Char) -> Boolean): Position? {
+    this.forEachIndexed { y, row -> row.forEachIndexed { x, char -> if (func(char)) return Position(x, y) }}
+    return null
+}
+
+fun BooleanGrid.deepCopy() = Array(size) { this[it].copyOf() }
+operator fun BooleanGrid.set(pos: Position, value: Boolean) { this[pos.y][pos.x] = value }
+operator fun BooleanGrid.get(pos: Position) = this.getOrNull(pos.y)?.getOrNull(pos.x)

@@ -7,6 +7,7 @@ abstract class AdventOfCodeDay(input: String?) {
     protected val lines = input?.lines() ?: this.javaClass.getResource("day$dayNum.txt")?.readText()?.lines() ?: error("Cannot read input file")
     protected val lineSequence: Sequence<String>
         get() = lines.asSequence()
+    protected fun inputAsCharGrid(): CharGrid = lines.map { it.toCharArray() }.toTypedArray()
 
     fun run() {
         runAttempt { part1() }

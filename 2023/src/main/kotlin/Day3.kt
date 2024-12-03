@@ -5,7 +5,7 @@ class Day3(input: String? = null) : AdventOfCodeDay(input) {
     override fun part2() = calcScore(ParsedLine::scoreGears)
 
     private fun calcScore(lineScore: ParsedLine.(prevLine: ParsedLine?, nextLine: ParsedLine?) -> Int): Int {
-        var prevLine: ParsedLine? = null
+        var prevLine: ParsedLine?
         var currentLine: ParsedLine? = null
         var nextLine: ParsedLine? = ParsedLine(lines[0])
 
