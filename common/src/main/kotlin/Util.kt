@@ -1,21 +1,13 @@
+import util.lcm
 import util.toInts
-import kotlin.math.sqrt
 
 fun Boolean.toInt() = if (this) 1 else 0
-
-fun quadraticRoots(a: Float, b: Float, c: Float): Pair<Float, Float> {
-    val discriminant = b * b - 4 * a * c
-    val sqrtDiscriminant = sqrt(discriminant)
-    return (-b + sqrtDiscriminant) / (2 * a) to (-b - sqrtDiscriminant) / (2 * a)
-}
 
 fun Sequence<String>.toInts() = map(String::toInts)
 fun <T> Sequence<T>.repeatForever() = sequence { while (true) { yieldAll(this@repeatForever) } }
 fun <T> Sequence<T>.repeat(n: Int) = sequence { for (i in 0..<n) { yieldAll(this@repeat) } }
 
 fun Sequence<Long>.lcm(): Long = reduce(::lcm)
-fun lcm(a: Long, b: Long) = (a * b) / gcd(a, b)
-tailrec fun gcd(a: Long, b: Long): Long = if (b == 0L) a else gcd(b, a % b)
 
 fun <T> List<T>.pairs(): List<Pair<T, T>> {
     val result = ArrayList<Pair<T, T>>(size * (size - 1) / 2)
