@@ -1,15 +1,7 @@
+import util.toInts
 import kotlin.math.sqrt
 
-fun Regex.findAllWithOverlap(input: CharSequence) = generateSequence({ find(input) }, { find(input, it.range.first + 1) })
-
-object Regexp {
-    val integer = "-?\\d+".toRegex()
-}
-
 fun Boolean.toInt() = if (this) 1 else 0
-
-fun String.toLongs() = Regexp.integer.findAll(this).map { it.value.toLong() }
-fun String.toInts() = Regexp.integer.findAll(this).map { it.value.toInt() }
 
 fun quadraticRoots(a: Float, b: Float, c: Float): Pair<Float, Float> {
     val discriminant = b * b - 4 * a * c

@@ -1,3 +1,4 @@
+import util.Regexp
 import kotlin.math.pow
 
 class Day4(input: String? = null) : AdventOfCodeDay(input) {

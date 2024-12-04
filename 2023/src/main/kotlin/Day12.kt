@@ -1,3 +1,5 @@
+import util.toInts
+
 class Day12(input: String? = null) : AdventOfCodeDay(input) {
     private val positionCache = mutableMapOf<Pair<Int, Int>, List<IntRange>>()
     private val arrangementCache = mutableMapOf<Pair<Int, Int>, Long>()

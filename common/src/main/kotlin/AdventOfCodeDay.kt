@@ -1,10 +1,11 @@
+import util.Regexp
 import kotlin.system.measureNanoTime
 
 abstract class AdventOfCodeDay(input: String?) {
     abstract fun part1(): Any
     abstract fun part2(): Any
 
-    protected val lines = input?.lines() ?: this.javaClass.getResource("day$dayNum.txt")?.readText()?.lines() ?: error("Cannot read input file")
+    val lines = input?.lines() ?: this.javaClass.getResource("day$dayNum.txt")?.readText()?.lines() ?: error("Cannot read input file")
     protected val lineSequence: Sequence<String>
         get() = lines.asSequence()
     protected fun inputAsCharGrid(): CharGrid = lines.map { it.toCharArray() }.toTypedArray()

@@ -1,3 +1,4 @@
+import util.toInts
 import kotlin.math.abs
 
 class Day2(
